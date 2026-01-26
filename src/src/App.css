@@ -1,0 +1,172 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+*{margin:0px;padding:0px;}
+ol, ul, li{list-style:none;}
+body{
+  font-family: "Noto Sans KR", sans-serif;
+  font-size:14px;
+  color:#333;
+}
+a{
+  color:#333;text-decoration:none;
+  font-size:16px;
+}
+a:hover{text-decoration:underline;}
+button{border:none;}
+
+header{
+  padding:10px 0px 0px 0px;
+}
+h1{
+  font-size:24px;
+  line-height:100px;
+  text-indent:30px;
+}
+main{
+  padding:14px
+}
+h2{color:rgb(231, 21, 67);line-height:60px;}
+nav{
+  background:rgb(18, 73, 224);
+  line-height:50px;
+  padding-left:10px;
+}
+nav ul{
+  display:flex;
+  width:700px;
+  justify-content:space-around;
+}
+nav a{color:#fff;}
+table{
+  width:760px;
+  border-collapse:collapse;
+  border:1px solid #ccc;
+}
+table caption{display:none;}
+th{
+  background:#222;
+  color:#fff;
+  font-weight:normal;
+}
+th, td{
+  border:1px solid #ccc;
+  line-height:40px;
+  text-align:center;
+}
+.data_list th:first-child{width:8%;}
+.data_list th:nth-child(2){width:20%;}
+.data_list th:nth-child(3){width:20%;}
+.data_list th:nth-child(4){width:22%;}
+/* .data_list th:last-child{} */
+
+/* 버튼 그룹 */
+.btn_group{
+  width:760px;
+  padding:10px 0px;
+  text-align:right;
+}
+/* 버튼서식 */
+.btn{
+  border:none;
+  background:#fff;
+  padding:4px 22px;
+  color:#fff;
+}
+.write_btn{
+  background:#b36703;
+}
+.update_btn{
+  background:rgb(10, 144, 253);
+}
+.del_btn{
+  background:#ff4949;
+}
+
+/* 2. 과일정보 테이블 서식 */
+.data_list2 th:first-child{width:10%;}
+.data_list2 th:nth-child(2){width:20%;}
+.data_list2 th:nth-child(3){width:15%;}
+.data_list2 th:nth-child(4){width:14.5%;}
+.data_list2 th:nth-child(5){width:17.5%;}
+.data_list2 th:nth-child(6){width:23%;}
+
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.toast {
+  background: #333;
+  color: #fff;
+  padding: 12px 18px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 6px;
+  background: red;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* 로그인 폼 서식 */
+.login-container {
+  text-align: center;
+}
+.login-container label{
+  display:none;
+}
+.input-box {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 240px;
+  border: 1px solid #ccc;
+}
+
+.login-button {
+  width:260px;
+  padding: 10px 20px;
+  background-color: rgb(168, 129, 0);
+  color: white;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.btn-group{padding-top:16px}
+.btn-group a{
+  margin:0px 10px;
+  font-size:0.9rem;
+}
+
+/* 푸터서식 */
+footer {background:#333;}
+footer address{
+  line-height:40px;
+  text-align:center;
+  font-style:normal;
+  color:#fff;
+}
