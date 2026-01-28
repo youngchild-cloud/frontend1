@@ -23,7 +23,7 @@ function BookStore(props) {
   //2. 데이터 리스트 비동기로 받아서 출력
   const loadData=()=>{
     axios //비동기로
-    .get('http://localhost:9070/bookstore') //주소로 요청한 json데이터 파일을 가져온다.
+    .get('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/bookstore') //주소로 요청한 json데이터 파일을 가져온다.
     .then(res=>{ //성공시 내용
       setData(res.data); //데이터 저장
       setBookstoreCount(res.data.length);
@@ -290,5 +290,6 @@ function BookStore(props) {
     </main>
   );
 }
+
 
 export default BookStore;
