@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 // import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -8,13 +8,13 @@ function BookStoreCreate(props) {
 
   ///1. 상태변수 선언하기
   const [form, setForm] = useState({
-    name:'',
-    area1:'',
-    area2:'',
-    area3:'',
-    book_cnt:0,
-    owner_nm:'',
-    tel_num:''
+    name: '',
+    area1: '',
+    area2: '',
+    area3: '',
+    book_cnt: 0,
+    owner_nm: '',
+    tel_num: ''
   });
 
   //2. url주소 관리
@@ -23,68 +23,68 @@ function BookStoreCreate(props) {
   // const {setBookstoreCount} = useContext(AlertContext);
 
   //3. 사용자가 입력폼에 데이터 입력시 발생되는 함수
-  const handleChange=(e)=>{
-    const {name, value} = e.target; //입력값 변수
+  const handleChange = (e) => {
+    const { name, value } = e.target; //입력값 변수
 
-    setForm((prev)=>({
+    setForm((prev) => ({
       ...prev,
-      [name]:name==='book_cnt'?Number(value):value
+      [name]: name === 'book_cnt' ? Number(value) : value
     }));
   }
 
   //3. '신규상품 등록하기'버튼 클릭시 내용 백엔드로 주소전송하기
-  const handleSubmit=(e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault(); //새로고침 방지
-    axios.post('http://localhost:9070/bookstore', form)
-    .then(()=>{ //성공시
-      alert('상품이 등록 완료되었습니다.');
-      // setBookstoreCount(count=>count+1);//숫자증가
-      navigate('/bookstore'); //처음 목록페이지로 이동
-    })
-    .catch((err)=>{//실패시
-      console.error(err);
-      alert('등록 중 오류가 발생되었습니다.');
-    });
+    axios.post('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/bookstore', form)
+      .then(() => { //성공시
+        alert('상품이 등록 완료되었습니다.');
+        // setBookstoreCount(count=>count+1);//숫자증가
+        navigate('/bookstore'); //처음 목록페이지로 이동
+      })
+      .catch((err) => {//실패시
+        console.error(err);
+        alert('등록 중 오류가 발생되었습니다.');
+      });
   }
-  
+
   return (
     <main>
       <section>
         <h2>4. BOOKS DB입력을 위한 페이지</h2>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name">서점명 : </label> 
-            <input 
-              id="name" 
-              name="name" 
-              value={form.name} 
+            <label htmlFor="name">서점명 : </label>
+            <input
+              id="name"
+              name="name"
+              value={form.name}
               onChange={handleChange}
-              required 
+              required
             />
           </div>
           <div>
             <label htmlFor="area1">지역1(시) : </label>
-            <select id="area1" 
+            <select id="area1"
               name="area1"
               value={form.area1}
               onChange={handleChange}
               required
             >
-              <option value="">지역을 선택하세요.</option>  
-              <option value="서울">서울</option>  
-              <option value="경기">경기</option>  
-              <option value="경남">경남</option>  
-              <option value="광주">광주</option>  
-              <option value="강원">강원</option>  
-              <option value="대전">대전</option>  
-              <option value="대구">대구</option>  
-              <option value="부산">부산</option>  
-              <option value="제주도">제주도</option>  
+              <option value="">지역을 선택하세요.</option>
+              <option value="서울">서울</option>
+              <option value="경기">경기</option>
+              <option value="경남">경남</option>
+              <option value="광주">광주</option>
+              <option value="강원">강원</option>
+              <option value="대전">대전</option>
+              <option value="대구">대구</option>
+              <option value="부산">부산</option>
+              <option value="제주도">제주도</option>
             </select>
           </div>
           <div>
             <label htmlFor="area2">지역2(구) : </label>
-            <select 
+            <select
               id="area2"
               name="area2"
               value={form.area2}
@@ -121,7 +121,7 @@ function BookStoreCreate(props) {
           </div>
           <div>
             <label htmlFor="">상품개수 :</label>
-            <input 
+            <input
               id="book_cnt" type="number" name="book_cnt"
               value={form.book_cnt}
               onChange={handleChange}
@@ -130,7 +130,7 @@ function BookStoreCreate(props) {
           </div>
           <div>
             <label htmlFor="owner_nm">대표자명 : </label>
-            <input 
+            <input
               id="owner_nm" name="owner_nm"
               value={form.owner_nm}
               onChange={handleChange}
@@ -139,7 +139,7 @@ function BookStoreCreate(props) {
           </div>
           <div>
             <label htmlFor="tel_num">전화번호 : </label>
-            <input 
+            <input
               id="tel_num" name="tel_num"
               value={form.tel_num}
               onChange={handleChange}

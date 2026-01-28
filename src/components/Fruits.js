@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {AlertContext} from '../AlertContext';
+import { AlertContext } from '../AlertContext';
 
 function Fruits(props) {
   // 1. 상태변수
@@ -9,28 +9,28 @@ function Fruits(props) {
   const [currentPage, setCurrentPage] = useState(1); //초기값 1페이지
   const [inputKeyword, setInputKeyword] = useState(''); //검색어 입력용 
   const [keyword, setKeyword] = useState('');// 실제 검색에 사용될 키워드
-  const {setFruitsCount} = useContext(AlertContext);
+  const { setFruitsCount } = useContext(AlertContext);
 
   //검색 버튼 클릭시 검색을 위한 함수
-  const handleSearch =() => {
+  const handleSearch = () => {
     setKeyword(inputKeyword); //검색단어 확정
     setCurrentPage(1);        //검색 시 항상 1페이지부터
   }
 
   //키보드 'Enter'키를 눌러도 검색이 되도록함.
-  const handleKeyDown =(e)=>{
-    if(e.key==='Enter'){
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
       handleSearch();
     }
   }
 
   //필터링 : 검색시 name(과일명)기준으로 검색
-  const filterData = data.filter(item=>
+  const filterData = data.filter(item =>
     item.name.toLowerCase().includes(keyword.toLowerCase())
   );
 
   //검색폼에 입력된 데이터 초기화
-  const handleReset =()=>{
+  const handleReset = () => {
     setInputKeyword(''); //입력값 초기화
     setKeyword('');     //검색 키워드 제거
     setCurrentPage(1); //첫페이지로 이동
@@ -44,37 +44,37 @@ function Fruits(props) {
 
   //2. 데이터 조회
   //1. 상품 리스트 조회(출력)
-  const loadData=()=>{
+  const loadData = () => {
     //React비동기 통신
     axios
-    //DB에서 json데이터를 불러온다.
-    .get('httphttps://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/fruits')
-    //성공시 데이터를 변수에 저장
-    .then(res=>{
-      setData(res.data);
-      setFruitsCount(res.data.length);
-    })
+      //DB에서 json데이터를 불러온다.
+      .get('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/fruits')
+      //성공시 데이터를 변수에 저장
+      .then(res => {
+        setData(res.data);
+        setFruitsCount(res.data.length);
+      })
 
-    //실패시 에러 출력
-    .catch(err=>console.log(err))
+      //실패시 에러 출력
+      .catch(err => console.log(err))
   }
 
-	//함수를 작성하여 loadData(); 함수 호출
-  useEffect(()=>{
+  //함수를 작성하여 loadData(); 함수 호출
+  useEffect(() => {
     loadData(); //콤포넌트 실행시 한번만 데이터를 로딩
-  },[]); //의존성 배열에 아무것도 없을 시 
+  }, []); //의존성 배열에 아무것도 없을 시 
 
   //1. 선택한 자료 삭제하기
-  const deleteData=(num)=>{
-    if(window.confirm('정말 삭제하시겠습니까?')){
+  const deleteData = (num) => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
       axios
-        .delete(`http://localhost:9070/fruits/${num}`)
-        .then(()=>{ //성공시
+        .delete(`https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/fruits/${num}`)
+        .then(() => { //성공시
           alert('삭제되었습니다.');
           loadData(); //삭제후 다시 불러와서 목록을 새로고침
         })
-        .catch(err=> console.log(err)); //오류시 에러 출력
-      }
+        .catch(err => console.log(err)); //오류시 에러 출력
+    }
   };
 
   //페이지네이션 계산공식 만들기   게시물 50개 / 5개씩 보여주겠다 = 50/5 = 5개 페이지가 나와야
@@ -99,16 +99,16 @@ function Fruits(props) {
 
   //수정 : totalPage가 0되는 경우를 방지해야 해서 무조건 최소값 1
   const totalPage = Math.max(1, Math.ceil(filterData.length / itemsPerPage));
-  
+
   //시작번호와 끝번호 계산하기
-  let startPage = Math.max(1, currentPage-2);
-  let endPage = Math.min(totalPage, startPage+4);
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPage, startPage + 4);
 
   //만약에 끝 페이지가 totalpage에 도달하면 시작페이지도 다시 수정
   startPage = Math.max(1, endPage - 4);
 
   //페이지 번호 배열(1~5까지 고정)
-  const pageNumbers = Array.from({length:endPage - startPage + 1}, (_, i) => startPage+i);
+  const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
   return (
     <main>
@@ -133,24 +133,24 @@ function Fruits(props) {
             </tr>
           </thead>
           <tbody>
-            { 
-            // 삼항조건연산자를 사용하여 조회된 데이터 개수가 0보다 크면 출력되게함
-              currentItems.length>0?(
-                currentItems.map(item=>(
-                <tr key={item.num}>
-                  <td>{item.num}</td>
-                  <td>{item.name}</td>
-                  <td>{Number(item.price).toLocaleString()}</td>
-                  <td>{item.color}</td>
-                  <td>{item.country}</td>
-                  <td>
-                    <button className="btn update_btn" onClick={()=>
-                      navigate(`/fruits/fruitsupdate/${item.num}`)}>수정</button>
-                    &nbsp;<button className="btn del_btn" onClick={()=>deleteData(item.num)}>삭제</button>
-                  </td>
-                </tr>
-              ))
-              ):(
+            {
+              // 삼항조건연산자를 사용하여 조회된 데이터 개수가 0보다 크면 출력되게함
+              currentItems.length > 0 ? (
+                currentItems.map(item => (
+                  <tr key={item.num}>
+                    <td>{item.num}</td>
+                    <td>{item.name}</td>
+                    <td>{Number(item.price).toLocaleString()}</td>
+                    <td>{item.color}</td>
+                    <td>{item.country}</td>
+                    <td>
+                      <button className="btn update_btn" onClick={() =>
+                        navigate(`/fruits/fruitsupdate/${item.num}`)}>수정</button>
+                      &nbsp;<button className="btn del_btn" onClick={() => deleteData(item.num)}>삭제</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
                 //조회된 결과가 0(없으면) 검색결과 없다라고 표시함.
                 <tr>
                   <td colSpan="6" style={{ textAlign: 'center' }}>
@@ -164,11 +164,11 @@ function Fruits(props) {
 
         {/* 글쓰기 버튼 */}
         <div className="btn_group">
-          <button onClick={()=>navigate('/fruits/fruitscreate')} className="btn write_btn">글쓰기</button>
+          <button onClick={() => navigate('/fruits/fruitscreate')} className="btn write_btn">글쓰기</button>
         </div>
-        
+
         {/* 페이지 번호 출력 */}
-        <div style={{marginTop:'20px', textAlign:'center', width:'760px'}}>
+        <div style={{ marginTop: '20px', textAlign: 'center', width: '760px' }}>
 
           {/* 
             이전 버튼이 숨겨지는 내용
@@ -187,21 +187,21 @@ function Fruits(props) {
           )} */}
 
           {/* 이전 버튼이 숨겨지지 않고 비활성화되게 하기 */}
-          {currentPage>1?
+          {currentPage > 1 ?
             <button
-              onClick={()=>setCurrentPage(currentPage-1)}
+              onClick={() => setCurrentPage(currentPage - 1)}
               style={{
-                color:'#333',
+                color: '#333',
                 marginRight: '5px',
                 padding: '5px 10px',
                 border: '1px solid #ccc',
                 borderRadius: '4px',
                 backgroundColor: '#e0e0e0'
               }}
-            >이전</button>:
+            >이전</button> :
             <button disabled
               style={{
-                color:'#fff',
+                color: '#fff',
                 marginRight: '5px',
                 padding: '5px 10px',
                 border: '1px solid #ccc',
@@ -215,23 +215,23 @@ function Fruits(props) {
             조건부 렌더링 공식 => 값이 참인 경우 && 실행할 값
             삼항조건연산자     => 조건식?참인값:거짓인값 
           */}
-            
-            {/* 페이지 번호 출력하기 */}
-            {pageNumbers.map(number=>(
-              <button 
-                key={number}
-                style={{
-                  marginRight: '5px',
-                  backgroundColor: currentPage === number ? '#4caf50' : '#f0f0f0',
-                  color: currentPage === number ? '#fff' : '#333',
-                  padding: '5px 10px',
-                  border: '1px solid #ccc',
-                  borderRadius: '4px'
-                }}
-                onClick={()=>setCurrentPage(number)}
-              >{number}</button>
-            ))}
-          
+
+          {/* 페이지 번호 출력하기 */}
+          {pageNumbers.map(number => (
+            <button
+              key={number}
+              style={{
+                marginRight: '5px',
+                backgroundColor: currentPage === number ? '#4caf50' : '#f0f0f0',
+                color: currentPage === number ? '#fff' : '#333',
+                padding: '5px 10px',
+                border: '1px solid #ccc',
+                borderRadius: '4px'
+              }}
+              onClick={() => setCurrentPage(number)}
+            >{number}</button>
+          ))}
+
           {/* 다음 버튼 - currentPage가 totalPage보다 작을 때 나와야 */}
           {/* 
               마지막 페이지 일 경우 다음 버튼이 사라짐
@@ -249,21 +249,21 @@ function Fruits(props) {
             >다음</button>
           )} */}
 
-          {currentPage<totalPage?
+          {currentPage < totalPage ?
             <button
-              onClick={()=>setCurrentPage(currentPage+1)}
+              onClick={() => setCurrentPage(currentPage + 1)}
               style={{
-                color:'#333',
+                color: '#333',
                 marginRight: '5px',
                 padding: '5px 10px',
                 border: '1px solid #ccc',
                 borderRadius: '4px',
                 backgroundColor: '#e0e0e0'
               }}
-            >다음</button>:
+            >다음</button> :
             <button disabled
               style={{
-                color:'#fff',
+                color: '#fff',
                 marginRight: '5px',
                 padding: '5px 10px',
                 border: '1px solid #ccc',
@@ -275,13 +275,13 @@ function Fruits(props) {
         </div>
 
         {/* 키워드 검색폼 */}
-        <div style={{width:'760px',marginTop:'30px',textAlign:'center'}}>
+        <div style={{ width: '760px', marginTop: '30px', textAlign: 'center' }}>
 
           {/* 1. 검색창에 검색단어를 입력하고 검색버튼 클릭시 검색되게하기 */}
           <input type="text" placeholder='상품명 검색'
             value={inputKeyword}
             onKeyDown={handleKeyDown}
-            onChange={(e)=>setInputKeyword(e.target.value)}
+            onChange={(e) => setInputKeyword(e.target.value)}
             style={{
               width: '250px',
               padding: '8px',
@@ -322,6 +322,5 @@ function Fruits(props) {
     </main>
   );
 }
-
 
 export default Fruits;

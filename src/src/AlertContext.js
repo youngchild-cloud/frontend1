@@ -10,19 +10,19 @@ export function AlertProvider({ children }) {
   const [questionCount, setQuestionCount] = useState(0);
 
   //페이지 로딩시 1번만 데이터 불러옴.
-  useEffect(()=>{
-    axios.get('http://localhost:9070/goods')
-    .then(res=>setGoodsCount(res.data.length));
-    axios.get('http://localhost:9070/fruits')
-    .then(res=>setFruitsCount(res.data.length));
-    axios.get('http://localhost:9070/bookstore')
-    .then(res=>setBookstoreCount(res.data.length));
-    axios.get('http://localhost:9070/question')
-    .then(res=>setQuestionCount(res.data.length));
-  },[]);
+  useEffect(() => {
+    axios.get('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/goods')
+      .then(res => setGoodsCount(res.data.length));
+    axios.get('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/fruits')
+      .then(res => setFruitsCount(res.data.length));
+    axios.get('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/bookstore')
+      .then(res => setBookstoreCount(res.data.length));
+    axios.get('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/question')
+      .then(res => setQuestionCount(res.data.length));
+  }, []);
 
   return (
-    <AlertContext.Provider value={{ 
+    <AlertContext.Provider value={{
       goodsCount, setGoodsCount, fruitsCount, setFruitsCount, bookstoreCount, setBookstoreCount, questionCount, setQuestionCount
     }}>
       {children}

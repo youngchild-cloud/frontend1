@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,8 +6,8 @@ function Login(props) {
 
   //1. 상태변수 선언 username, password
   const [form, setForm] = useState({
-    username:'', //아이디 저장을 위한 변수
-    password:''  //패스워드 저장을 위한 변수
+    username: '', //아이디 저장을 위한 변수
+    password: ''  //패스워드 저장을 위한 변수
   });
 
   const [error, setError] = useState('');
@@ -16,30 +16,30 @@ function Login(props) {
   const navigate = useNavigate();
 
   //2. 입력시 발생되는 함수
-  const handleChange=(e)=>{
+  const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]:e.target.value
+      [e.target.name]: e.target.value
     })
   }
 
   //3. 로그인 버튼 클릭시 실행되는 함수
-  const handleSubmit = async e =>{
+  const handleSubmit = async e => {
     e.preventDefault(); //새로고침 방지
     //console.log(form.username, form.password)
 
-    try{ //성공시 실행내용
-      const res = await axios.post('http://localhost:9070/login', form);
+    try { //성공시 실행내용
+      const res = await axios.post('https://port-0-backend-express-server-mkvwe9x45fceba4b.sel3.cloudtype.app/login', form);
       //사용자 인증이 끝나면 '토근'을 발급한다.
       localStorage.setItem('token', res.data.token);
-      
+
       alert('로그인 성공');
 
       //해당페이지로 이동하기
       navigate('/');
-      
-    // 리디렉션 등 필요 시
-    }catch(err){ //실패시 실행내용
+
+      // 리디렉션 등 필요 시
+    } catch (err) { //실패시 실행내용
       setError('로그인 실패 : 아이디와 패스워드를 다시 확인하세요.');
     }
   };
@@ -51,32 +51,32 @@ function Login(props) {
         <form onSubmit={handleSubmit}>
           <p>
             <label htmlFor="username">아이디 : </label>
-            <input type="text" 
-            id="username" 
-            name="username"
-            value={form.username} 
-            onChange={handleChange}
-            className="input-box" 
-            placeholder='아이디' 
-            required />
+            <input type="text"
+              id="username"
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+              className="input-box"
+              placeholder='아이디'
+              required />
           </p>
           <p>
             <label htmlFor="password">패스워드 : </label>
-            <input type="password" 
-            id="password" 
-            name="password" 
-            value={form.password}
-            onChange={handleChange}
-            className="input-box" 
-            placeholder="패스워드" 
-            required />
+            <input type="password"
+              id="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              className="input-box"
+              placeholder="패스워드"
+              required />
           </p>
           <p>
             <input type="submit" className="login-button" value="로그인" />
           </p>
 
           {/* 에러가 발생이 되면 빨강색으로 표시하기 */}
-          {error&&<p style={{color:'red'}}>{error}</p>}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
 
           <p className="btn-group">
             <Link to="/id_search">아이디 찾기 </Link>
@@ -96,7 +96,7 @@ function Login(props) {
           <dd>4. 보안 : 비밀번호 bycrpt암호화, JWT로 인증을 유지</dd>
         </dl>
         <br />
-        <div style={{textAlign:'left'}}>
+        <div style={{ textAlign: 'left' }}>
           <p>//1. DB 설계(users)</p>
           <p>
             CREATE TABLE users (<br />
@@ -104,16 +104,16 @@ function Login(props) {
             username VARCHAR(100) UNIQUE NOT NULL,<br />
             password VARCHAR(255) NOT NULL,<br />
             datetime TIMESTAMP NOT NULL DEFAULT <br />CURRENT_TIMESTAMP<br />
-          );<br /><br />
+            );<br /><br />
           </p>
 
           <p>
           //2. 데이터베이스에 회원정보 입력하기(INSERT INTO)<br />
-        INSERT INTO users VALUES(1, 'jeon', '1234', '2025-05-26');<br />
-        INSERT INTO users VALUES(2, 'jeon1', '1234', '2025-05-26');<br />
-        INSERT INTO users VALUES(3, 'jeon2', '1234', '2025-05-26');<br />
-        INSERT INTO users VALUES(4, 'jeon3', '1234', '2025-05-26');<br />
-        INSERT INTO users VALUES(5, 'jeon4', '1234', '2025-05-26');<br /><br />
+            INSERT INTO users VALUES(1, 'jeon', '1234', '2025-05-26');<br />
+            INSERT INTO users VALUES(2, 'jeon1', '1234', '2025-05-26');<br />
+            INSERT INTO users VALUES(3, 'jeon2', '1234', '2025-05-26');<br />
+            INSERT INTO users VALUES(4, 'jeon3', '1234', '2025-05-26');<br />
+            INSERT INTO users VALUES(5, 'jeon4', '1234', '2025-05-26');<br /><br />
 
           //3. UI화면 설계 - 로그인 폼, 회원가입 폼 구현
           </p>
